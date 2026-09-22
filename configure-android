@@ -31,14 +31,30 @@ FFMPEG_CONFIG=" \
 --disable-avdevice \
 --disable-debug \
 --disable-doc \
---disable-filters \
 --disable-programs \
 --disable-static \
+--disable-v4l2request \
 --enable-shared"
 
 echo "Generating configuration..."
 echo "./configure $ARCH_CONFIG $FFMPEG_CONFIG"
 ./configure $ARCH_CONFIG $FFMPEG_CONFIG
+
+
+# Operit 定制 3：v4l2request 归一化（configure 硬开不吃开关；Android 无 libudev）
+python3 - <<'PYEOF'
+import re
+from pathlib import Path
+for name, pat in (
+    ("config.h", r"#define CONFIG_V4L2_REQUEST 1"),
+    ("config_components.h", r"#define CONFIG_\w+_V4L2REQUEST_HWACCEL 1"),
+):
+    f = Path(name)
+    t = f.read_text()
+    t = re.sub(pat, lambda m: m.group(0)[:-1] + "0", t)
+    f.write_text(t)
+print("v4l2request flags normalized to 0")
+PYEOF
 
 cat > libavutil/ffversion.h <<EOF
 #ifndef AVUTIL_FFVERSION_H

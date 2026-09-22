@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: LGPL-2.1-or-later
 //
 // Operit fork 增补：dvab 上游缺 libavfilter/libavdevice 的 Android.bp（源在树）。
-// 源集策对齐 libavcodec/Android.bp：root .c + aarch64，x86/.asm 不收。
+// 源集由 Makefile OBJS 规则 + config 旗标推导（tools 侧脚本生成）——
+// 裸 glob 会误收 *_template.c 碎片与外部库滤镜（pocketsphinx/zimg/whisper 等）。
 //
 
 cc_library_shared {
@@ -15,54 +16,8 @@ cc_library_shared {
     ],
     srcs: [
         "alldevices.c",
-        "alsa.c",
-        "alsa_dec.c",
-        "alsa_enc.c",
-        "android_camera.c",
         "avdevice.c",
-        "caca.c",
-        "ccfifo.c",
-        "decklink_dec_c.c",
-        "decklink_enc_c.c",
-        "dshow.c",
-        "dshow_common.c",
-        "dshow_crossbar.c",
-        "dshow_enummediatypes.c",
-        "dshow_enumpins.c",
-        "dshow_filter.c",
-        "dshow_pin.c",
-        "fbdev_common.c",
-        "fbdev_dec.c",
-        "fbdev_enc.c",
-        "file_open.c",
-        "gdigrab.c",
-        "iec61883.c",
-        "indev_list.c",
-        "jack.c",
-        "kmsgrab.c",
-        "lavfi.c",
-        "libcdio.c",
-        "libdc1394.c",
-        "openal-dec.c",
-        "oss.c",
-        "oss_dec.c",
-        "oss_enc.c",
-        "outdev_list.c",
-        "pulse_audio_common.c",
-        "pulse_audio_dec.c",
-        "pulse_audio_enc.c",
-        "reverse.c",
-        "sndio.c",
-        "sndio_dec.c",
-        "sndio_enc.c",
-        "timefilter.c",
         "utils.c",
-        "v4l2-common.c",
-        "v4l2.c",
-        "v4l2enc.c",
         "version.c",
-        "vfwcap.c",
-        "xcbgrab.c",
-        "xv.c",
     ],
 }

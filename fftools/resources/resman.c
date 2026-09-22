@@ -24,6 +24,7 @@
  */
 
 #include "config.h"
+#include "libavutil/mem.h"
 
 #include <string.h>
 
