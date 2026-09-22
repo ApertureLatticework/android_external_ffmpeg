@@ -7,7 +7,7 @@
 
 cc_library_headers {
     name: "ffmpeg_headers",
-    vendor: true,
+    vendor: false,
     export_include_dirs: [
         ".",
         "libavcodec",
@@ -20,7 +20,7 @@ cc_library_headers {
 
 cc_defaults {
     name: "ffmpeg_defaults",
-    vendor: true,
+    vendor: false,
     compile_multilib: "64",
     header_libs: [
         "ffmpeg_headers",
@@ -80,4 +80,40 @@ cc_defaults {
     ],
     c_std: "c17",
     cpp_std: "c++11",
+}
+
+// Operit fork 增补：ffmpeg CLI 编库入口（包内薄壳 liboperit_ffmpeg 经
+// JNI 呼叫 ffmpeg_cli_main；仅 ffmpeg.c 定义 main，ffprobe/ffplay/graphprint 不收）。
+cc_library_shared {
+    name: "libffmpeg_cli",
+    defaults: ["ffmpeg_defaults"],
+    local_include_dirs: ["fftools"],
+    cflags: [
+        "-Dmain=ffmpeg_cli_main",
+    ],
+    shared_libs: [
+        "libavcodec",
+        "libavformat",
+        "libavutil",
+        "libswresample",
+        "libswscale",
+        "libavfilter",
+        "libavdevice",
+    ],
+    srcs: [
+        "fftools/cmdutils.c",
+        "fftools/opt_common.c",
+        "fftools/ffmpeg.c",
+        "fftools/ffmpeg_dec.c",
+        "fftools/ffmpeg_demux.c",
+        "fftools/ffmpeg_enc.c",
+        "fftools/ffmpeg_filter.c",
+        "fftools/ffmpeg_hw.c",
+        "fftools/ffmpeg_mux.c",
+        "fftools/ffmpeg_mux_init.c",
+        "fftools/ffmpeg_opt.c",
+        "fftools/ffmpeg_sched.c",
+        "fftools/sync_queue.c",
+        "fftools/thread_queue.c",
+    ],
 }
