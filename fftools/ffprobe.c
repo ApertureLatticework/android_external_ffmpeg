@@ -32,6 +32,7 @@
 #include "libavformat/avformat.h"
 #include "libavformat/version.h"
 #include "libavcodec/avcodec.h"
+#include "libavcodec/codec_desc.h"
 #include "libavcodec/version.h"
 #include "libavutil/ambient_viewing_environment.h"
 #include "libavutil/avassert.h"

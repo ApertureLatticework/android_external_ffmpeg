@@ -74,6 +74,7 @@
 #include "libavutil/avtime.h"
 
 #include "libavformat/avformat.h"
+#include "libavcodec/codec_desc.h"
 
 #include "libavdevice/avdevice.h"
 

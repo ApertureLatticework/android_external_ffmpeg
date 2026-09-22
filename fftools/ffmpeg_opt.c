@@ -35,6 +35,7 @@
 #include "libavformat/avformat.h"
 
 #include "libavcodec/avcodec.h"
+#include "libavcodec/codec_desc.h"
 #include "libavcodec/bsf.h"
 
 #include "libavfilter/avfilter.h"
